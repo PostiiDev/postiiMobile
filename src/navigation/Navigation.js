@@ -16,16 +16,15 @@ const Navigation = () => {
     useRecoilState(isAuthenticatedUser);
     const [user, setUser] = useRecoilState(userInformation)
   useEffect(() => {
-    checkIfIsAuthenticated();
+   checkIfIsAuthenticated();
   });
   const checkIfIsAuthenticated = async () => {
-    //await AsyncStorage.removeItem('user')
     try {
 
       const check = await AsyncStorage.getItem('user')
       const value = JSON.parse(check)
     
-      if (user !== null) {
+      if (value !== null) {
         setIsAuthenticated(true)
         setUser(value)
         

@@ -73,7 +73,7 @@ export const Login = () => {
               type: 'success',
             });
             await AsyncStorage.setItem('user', JSON.stringify(data));
-            setIsAuthenticated(true);
+            setIsAuthenticated(()=> true);
           }
         } catch (error) {
           showMessage({
