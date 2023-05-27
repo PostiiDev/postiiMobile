@@ -16,46 +16,20 @@ import {
   View,
 } from 'react-native';
 
-
-
-
-
+import Navigation from './src/navigation/Navigation';
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-
+  const isDarkMode = 8;
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      />
-
-      <View style={{justifyContent:'center', alignItems:'center'}}>
-        <Text style={{fontSize:18, fontWeight:'bold', color:'green'}}>
-          Hello khadija ++
-        </Text>
-      </View>
-     
+      <Navigation />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-   flex:1
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    flex: 1,backgroundColor:'#fff'
   },
 });
 
