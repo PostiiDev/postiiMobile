@@ -14,5 +14,6 @@ export const userInformation = atom({
 
 export const apiUrl = atom({
     key: 'apiUrl',
-    default : 'http://10.0.2.2'
+    default : 'http://192.168.1.19'
 })
+//192.168.1.19

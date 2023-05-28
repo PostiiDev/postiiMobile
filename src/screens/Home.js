@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const [user, setUser] = useRecoilState(userInformation);
+  //console.log('user:', user.userInfo ?user.userInfo : 'no user exist here' )
   const [isAuthenticated, setIsAuthenticated] =useRecoilState(isAuthenticatedUser)
   const navigation = useNavigation();
   const signout = async () => {
