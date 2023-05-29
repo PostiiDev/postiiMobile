@@ -9,7 +9,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import moment from 'moment/min/moment-with-locales';
 
-const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
+const LeftContent = props => (
+  <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
+);
 export const Offre = () => {
   const [loading, setLoading] = useState(false);
   const [offre, setOffre] = useState([]);
@@ -22,7 +24,6 @@ export const Offre = () => {
   const getAllOffre = async () => {
     const data = await fetchAllOffre();
     if (data) {
-      console.log('data:', data.data);
       setOffre(() => data.data);
     }
   };
@@ -39,8 +40,8 @@ export const Offre = () => {
       setLoading(() => true);
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
+      //console.log('parsedValue:', parsedValue)
       let id = parsedValue.userInfo._id;
-      console.log('id:', id);
 
       let getOffre = await fetch(
         `${url}:5000/api/offre/myoffre/${id}`,
@@ -86,7 +87,11 @@ export const Offre = () => {
                   subtitle={moment(item.createdAt).locale('fr').fromNow()}
                   left={LeftContent}
                 />
-                <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
+                <Card.Cover
+                  source={{
+                    uri: item.cover ? item.cover : 'https://picsum.photos/700',
+                  }}
+                />
 
                 <Card.Content>
                   <Text variant="titleLarge">{item.title}</Text>
@@ -96,9 +101,9 @@ export const Offre = () => {
                     nombre de jour : {item.deadLine}
                   </Text>
                 </Card.Content>
-                <Card.Actions>
+                {/* <Card.Actions>
                   <Button>Posutler</Button>
-                </Card.Actions>
+                </Card.Actions> */}
               </Card>
             );
           })}

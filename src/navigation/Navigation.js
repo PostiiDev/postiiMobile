@@ -3,7 +3,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Register} from '../screens/Register';
 import {Login} from '../screens/Login';
-import {Offre} from '../screens/Offre';
 import {useRecoilState} from 'recoil';
 import {isAuthenticatedUser, userInformation} from '../atom/authtication';
 import Home from '../screens/Home';
@@ -12,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Color} from '../utils/Color';
-
+import OffreStack from './OffreStack';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -71,7 +70,7 @@ const Navigation = () => {
           />
           <Tab.Screen
             name="Offre"
-            component={Offre}
+            component={OffreStack}
             options={{headerShown: false}}
           />
         </Tab.Navigator>
