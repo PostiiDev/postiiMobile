@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import {
   Avatar,
@@ -38,12 +38,21 @@ const CreateOffreSchema = Yup.object().shape({
   deadLine: Yup.string().required('temp estimé est calculer par jours requis*'),
   prix: Yup.string().required('prix est requis*'),
 });
+
+
 const CreateOffre = () => {
   const api = useRecoilValue(apiUrl);
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [refresh, setRefrech] = useState(false)
+
+
+
+
+
+
   const takeimage = async () => {
     const result = await ImagePicker.launchImageLibrary();
     if (result.didCancel) {
@@ -109,11 +118,11 @@ const CreateOffre = () => {
     useFormik({
       validationSchema: CreateOffreSchema,
       initialValues: {
-        title: 'Create your fiest offre with react naitve',
-        Description: 'this should work',
-        category: 'development',
-        deadLine: '50',
-        prix: '12',
+        title: '',
+        Description: '',
+        category: '',
+        deadLine: '',
+        prix: '',
       },
       onSubmit: async values => {
         if (files.length == 0) {

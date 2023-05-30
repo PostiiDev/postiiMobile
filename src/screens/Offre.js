@@ -1,5 +1,5 @@
-import {StyleSheet, View, ScrollView} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, ScrollView, RefreshControl} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
 import {Color} from '../utils/Color';
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {apiUrl, userInformation} from '../atom/authtication';
@@ -19,6 +19,8 @@ export const Offre = () => {
   const [user, setUser] = useRecoilState(userInformation);
   const url = useRecoilValue(apiUrl);
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
     getAllOffre();
   }, []);
@@ -63,6 +65,10 @@ export const Offre = () => {
     }
   };
 
+  const onRefresh = useCallback(() => {
+    fetchAllOffre();
+  }, []);
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -71,7 +77,11 @@ export const Offre = () => {
           <Text style={{paddingTop: '4%'}}>Loading ...</Text>
         </View>
       ) : (
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           <Text style={styles.title}>Mes Offre</Text>
 
           <Button onPress={() => navigation.navigate('OffreCreate')}>
