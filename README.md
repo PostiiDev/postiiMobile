@@ -28,10 +28,10 @@ and change the ip adress from your local wifi proprety
 
 export const apiUrl = atom({
     key: 'apiUrl',
-    default : 'chnage this to you ip adress'
+    default : 'http://{chnage this to you ip adress}'
 })
 
-
+always add http://0.0.0.0 you ip dont forget http://
 
 enjoy working !!
 

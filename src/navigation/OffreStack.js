@@ -8,13 +8,24 @@ const Stack = createNativeStackNavigator();
 
 const OffreStack = () => {
   return (
-    <Stack.Navigator initialRouteName='OffreCreate'>
-      <Stack.Screen name="AllOffre" component={Offre}  options={{headerShown:false}}/>
-      <Stack.Screen name="OffreCreate" component={CreateOffre}  options={{headerShown:false}}/>
-      <Stack.Screen name="OffreUpdate" component={UpdateOffre}  options={{headerShown:false}}/>
+    <Stack.Navigator initialRouteName="AllOffre">
+      <Stack.Screen
+        name="AllOffre"
+        component={Offre}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OffreCreate"
+        component={CreateOffre}
+        options={{headerShown: true, title: ''}}
+      />
+      <Stack.Screen
+        name="OffreUpdate"
+        component={UpdateOffre}
+        options={{headerShown: true, title: ''}}
+      />
     </Stack.Navigator>
   );
 };
 
 export default OffreStack;
-

@@ -8,6 +8,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import moment from 'moment/min/moment-with-locales';
+import {useNavigation} from '@react-navigation/native';
 
 const LeftContent = props => (
   <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
@@ -17,7 +18,7 @@ export const Offre = () => {
   const [offre, setOffre] = useState([]);
   const [user, setUser] = useRecoilState(userInformation);
   const url = useRecoilValue(apiUrl);
-
+  const navigation = useNavigation();
   useEffect(() => {
     getAllOffre();
   }, []);
@@ -72,6 +73,10 @@ export const Offre = () => {
       ) : (
         <ScrollView style={styles.container}>
           <Text style={styles.title}>Mes Offre</Text>
+
+          <Button onPress={() => navigation.navigate('OffreCreate')}>
+            Creer un offre
+          </Button>
           {offre.map((item, index) => {
             return (
               <Card

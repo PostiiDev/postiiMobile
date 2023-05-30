@@ -26,6 +26,7 @@ import {useFormik} from 'formik';
 import {height, width} from '../utils/dimenion';
 import {useRecoilValue} from 'recoil';
 import {apiUrl} from '../atom/authtication';
+import {useNavigation} from '@react-navigation/native';
 const CreateOffreSchema = Yup.object().shape({
   title: Yup.string()
     .required('Le nom est requis*')
@@ -42,6 +43,7 @@ const CreateOffre = () => {
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
   const takeimage = async () => {
     const result = await ImagePicker.launchImageLibrary();
     if (result.didCancel) {
@@ -90,7 +92,6 @@ const CreateOffre = () => {
         console.log('url:', url);
         setImageUrl(() => url);
         setImageUrl(() => url);
-        setLoading(false);
 
         return url;
       };
@@ -137,7 +138,6 @@ const CreateOffre = () => {
               const {url} = JSON.parse(xhr.responseText);
               console.log('url:', url);
               setImageUrl(() => url);
-              setLoading(false);
 
               // Once you have the URL, you can make the POST request to your server
               const postData = {
@@ -162,11 +162,20 @@ const CreateOffre = () => {
                 .then(data => {
                   // Handle the response from the server
                   console.log('Response from server:', data);
+                  setLoading(false);
+
                   // Do something with the response if needed
+                    navigation.reset({
+                      index: 0,
+                      routes: [{name: 'AllOffre'}],
+                    });
+                
                 })
                 .catch(error => {
                   console.log('Error:', error);
                   // Handle the error if needed
+                  setLoading(false);
+
                 });
             };
             xhr.onerror = error => {
