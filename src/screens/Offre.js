@@ -8,7 +8,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import moment from 'moment/min/moment-with-locales';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 
 const LeftContent = props => (
   <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
@@ -20,10 +20,12 @@ export const Offre = () => {
   const url = useRecoilValue(apiUrl);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
-
+  const isFocused = useIsFocused();
   useEffect(() => {
-    getAllOffre();
-  }, []);
+    if (isFocused) {
+      getAllOffre();
+    }
+  }, [isFocused]);
   const getAllOffre = async () => {
     const data = await fetchAllOffre();
     if (data) {

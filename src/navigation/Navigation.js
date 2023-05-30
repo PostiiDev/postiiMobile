@@ -46,7 +46,7 @@ const Navigation = () => {
     <NavigationContainer>
       {isAuthenticated ? (
         <Tab.Navigator
-          initialRouteName="Offre"
+          initialRouteName="Home"
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
