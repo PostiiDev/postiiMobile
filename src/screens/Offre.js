@@ -89,41 +89,59 @@ export const Offre = () => {
           <Button onPress={() => navigation.navigate('OffreCreate')}>
             Creer un offre
           </Button>
-          {offre.map((item, index) => {
-            return (
-              <Card
-                style={{
-                  width: '95%',
-                  marginVertical: '2%',
-                  borderRadius: 10,
-                  alignSelf: 'center',
-                }}
-                key={index}>
-                <Card.Title
-                  title={item.category}
-                  subtitle={moment(item.createdAt).locale('fr').fromNow()}
-                  left={LeftContent}
-                />
-                <Card.Cover
-                  source={{
-                    uri: item.cover ? item.cover : 'https://picsum.photos/700',
-                  }}
-                />
+          {offre.length > 0 ? (
+            <View>
+              {offre.map((item, index) => {
+                return (
+                  <Card
+                    style={{
+                      width: '95%',
+                      marginVertical: '2%',
+                      borderRadius: 10,
+                      alignSelf: 'center',
+                    }}
+                    key={index}>
+                    <Card.Title
+                      title={item.category}
+                      subtitle={moment(item.createdAt).locale('fr').fromNow()}
+                      left={LeftContent}
+                    />
+                    <Card.Cover
+                      source={{
+                        uri: item.cover
+                          ? item.cover
+                          : 'https://picsum.photos/700',
+                      }}
+                    />
 
-                <Card.Content>
-                  <Text variant="titleLarge">{item.title}</Text>
-                  <Text variant="bodyMedium">{item.Description}</Text>
-                  <Text variant="bodyMedium">prix : {item.prix} dt</Text>
-                  <Text variant="bodyMedium">
-                    nombre de jour : {item.deadLine}
-                  </Text>
-                </Card.Content>
-                {/* <Card.Actions>
+                    <Card.Content>
+                      <Text variant="titleLarge">{item.title}</Text>
+                      <Text variant="bodyMedium">{item.Description}</Text>
+                      <Text variant="bodyMedium">prix : {item.prix} dt</Text>
+                      <Text variant="bodyMedium">
+                        nombre de jour : {item.deadLine}
+                      </Text>
+                    </Card.Content>
+                    {/* <Card.Actions>
                   <Button>Posutler</Button>
                 </Card.Actions> */}
-              </Card>
-            );
-          })}
+                  </Card>
+                );
+              })}
+            </View>
+          ) : (
+            <View style={{justifyContent: 'center', alignItems: 'center', flex:1}}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  letterSpacing: 1.2,
+                }}>
+                Creer Votre Premier Offre
+              </Text>
+            </View>
+          )}
         </ScrollView>
       )}
     </View>

@@ -39,19 +39,13 @@ const CreateOffreSchema = Yup.object().shape({
   prix: Yup.string().required('prix est requis*'),
 });
 
-
 const CreateOffre = () => {
   const api = useRecoilValue(apiUrl);
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const [refresh, setRefrech] = useState(false)
-
-
-
-
-
+  const [refresh, setRefrech] = useState(false);
 
   const takeimage = async () => {
     const result = await ImagePicker.launchImageLibrary();
@@ -125,9 +119,10 @@ const CreateOffre = () => {
         prix: '',
       },
       onSubmit: async values => {
-        if (files.length == 0) {
-          Alert.alert('', "Vous devriez prendre des images pour l'offre");
-        } else {
+        // if (files.length == 0) {
+        //   Alert.alert('', "Vous devriez prendre des images pour l'offre");
+        // } else {
+          
           console.log('values:', values);
 
           const data = new FormData();
@@ -143,24 +138,28 @@ const CreateOffre = () => {
               'POST',
               'https://api.cloudinary.com/v1_1/dagvldcli/image/upload',
             );
-            xhr.onload = () => {
+            xhr.onload =async  () => {
               const {url} = JSON.parse(xhr.responseText);
               console.log('url:', url);
               setImageUrl(() => url);
-
+              let value = await AsyncStorage.getItem('user');
+              let parsedValue = JSON.parse(value);
+              //console.log('parsedValue:', parsedValue)
+              let id = parsedValue.userInfo._id;
+              console.log('id:', id)
               // Once you have the URL, you can make the POST request to your server
               const postData = {
-                title: 'Create your fiest offre with react naitve',
-                Description: 'this should work',
-                category: 'development',
+                title: values.title,
+                Description: values.Description,
+                category: values.category,
                 deadLine: +values.deadLine,
-                prix: '120',
-                cover: url,
+                prix: values.prix,
+                cover: url ? url : "",
               };
               console.log('postData:', postData);
 
               console.log('start possting.....');
-              fetch(`${api}:5000/api/offre/647235c380928817876f2e0e`, {
+              fetch(`${api}:5000/api/offre/${id}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -174,17 +173,15 @@ const CreateOffre = () => {
                   setLoading(false);
 
                   // Do something with the response if needed
-                    navigation.reset({
-                      index: 0,
-                      routes: [{name: 'AllOffre'}],
-                    });
-                
+                  navigation.reset({
+                    index: 0,
+                    routes: [{name: 'AllOffre'}],
+                  });
                 })
                 .catch(error => {
                   console.log('Error:', error);
                   // Handle the error if needed
                   setLoading(false);
-
                 });
             };
             xhr.onerror = error => {
@@ -195,7 +192,7 @@ const CreateOffre = () => {
           } catch (err) {
             console.log('err', err);
           }
-        }
+       
       },
     });
   return (
