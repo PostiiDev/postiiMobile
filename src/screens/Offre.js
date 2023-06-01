@@ -45,11 +45,12 @@ export const Offre = () => {
       setLoading(() => true);
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
-      //console.log('parsedValue:', parsedValue)
+      console.log('parsedValue:', parsedValue)
       let id = parsedValue.userInfo._id;
+      console.log('id:', id)
 
       let getOffre = await fetch(
-        `${url}:5000/api/offre/myoffre/${id}`,
+        `${url}/api/offre/myoffre/${id}`,
         requestOptions,
       );
       let response = getOffre.json();

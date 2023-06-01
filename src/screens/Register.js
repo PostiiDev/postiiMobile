@@ -87,7 +87,7 @@ export const Register = () => {
         console.log('values when submit ===========>\n:', values);
         setLoading(true);
         try {
-          const api = `${url}:5000/api/auth/register`;
+          const api = `${url}/api/auth/register`;
           const response = await fetch(api, {
             method: 'POST',
             headers: {
