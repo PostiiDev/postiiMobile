@@ -157,9 +157,9 @@ const CreateOffre = () => {
                 cover: url ? url : "",
               };
               console.log('postData:', postData);
-
-              console.log('start possting.....');
-              fetch(`${api}:5000/api/offre/${id}`, {
+              let newurl = `https://server-production-0458.up.railway.app/api/offre/${id}`
+              console.log('start possting.....',newurl );
+              fetch(newurl, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
