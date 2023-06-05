@@ -18,7 +18,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="OffreDetail"
         component={OffreDetail}
-        options={{headerShown: true, title: '', presentation: 'modal'}}
+        options={{headerShown: true, title: ''}}
       />
        <Stack.Screen
         name="Proposition"

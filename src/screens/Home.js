@@ -46,7 +46,7 @@ const Home = () => {
     if (isFocused) {
       getAllOffre();
     }
-  }, [isFocused]);
+  }, []);
   const getAllOffre = async () => {
     const data = await fetchAllOffre();
     console.log('data:', data.length);
@@ -91,15 +91,6 @@ const Home = () => {
       {/* <Text>All Offre</Text>
 
       <Button onPress={signout}>sign out</Button> */}
-      <View style={{padding: 10}}>
-        {!loading && (
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-        )}
-      </View>
       {loading ? (
         <View style={styles.loading}>
           <ActivityIndicator color={Color.white} size="small" />
@@ -107,15 +98,24 @@ const Home = () => {
         </View>
       ) : (
         <View style={{marginTop: '4%'}}>
-          {offre.length > 0 && (
-            <FlatList
-              contentContainerStyle={{padding: 10}}
-              data={offre}
-              renderItem={({item}) => <CardOffre item={item} />}
-              ListEmptyComponent={<Text>il n'ya pas des offre pour le moment</Text>}
-              initialNumToRender={50}
-            />
-          )}
+          <FlatList
+            ListHeaderComponent={
+              <View style={{margin: '5%'}}>
+                <Searchbar
+                  placeholder="rechercher un offre"
+                  onChangeText={onChangeSearch}
+                  value={searchQuery}
+                />
+              </View>
+            }
+            contentContainerStyle={{}}
+            data={offre}
+            renderItem={({item}) => <CardOffre item={item} />}
+            ListEmptyComponent={
+              <Text>il n'ya pas des offre pour le moment</Text>
+            }
+            initialNumToRender={10}
+          />
         </View>
       )}
     </View>
