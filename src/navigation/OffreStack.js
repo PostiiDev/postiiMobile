@@ -3,7 +3,7 @@ import {Offre} from '../screens/Offre';
 import CreateOffre from '../screens/CreateOffre';
 import UpdateOffre from '../screens/UpdateOffre';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import OffreDetail from '../screens/OffreDetail';
 const Stack = createNativeStackNavigator();
 
 const OffreStack = () => {
@@ -24,6 +24,12 @@ const OffreStack = () => {
         component={UpdateOffre}
         options={{headerShown: true, title: ''}}
       />
+       <Stack.Screen
+        name="OffreDetail"
+        component={OffreDetail}
+        options={{headerShown: true, title: ''}}
+      />
+  
     </Stack.Navigator>
   );
 };

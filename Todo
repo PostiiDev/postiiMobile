@@ -1,38 +1,32 @@
 
-screen 1
- authentication 
- 
- done !
 
 
- screen 2 : 
 
-creatios de demande de  service  : 
 
-    formulaire de demande : 
-
-        titre de service 
-        date end 
-        description detailé
-        image not require
-        status : true || false
-        createdAt
-        updatedAt
-        propostion default 0
-        ajouter un fichier pdf not require 
-        
  screeen 3 : 
  apply to service : 
  voir tout les servives disponible
 
  button postuler a ce service 
  
-    
 
-
- 2 api :
  
- send image by id 
 
- send pdf by id 
+# Refacor
+
+
+ new
+ 
+in createdAtte offre make select list in categories
+
+ **Gestion de profile :|
+ acceder a profile     |Sprint(2)
+ modifier              |
+ supprimer             |
+ 
+ **sprint (4) manque :
+ contact entre demendeur de servie et entreprise (par gmail)
+ 
+ 
+
 

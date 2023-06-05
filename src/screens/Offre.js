@@ -9,6 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import moment from 'moment/min/moment-with-locales';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {width} from '../utils/dimenion';
 
 const LeftContent = props => (
   <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
@@ -45,9 +47,9 @@ export const Offre = () => {
       setLoading(() => true);
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
-      console.log('parsedValue:', parsedValue)
+      console.log('parsedValue:', parsedValue);
       let id = parsedValue.userInfo._id;
-      console.log('id:', id)
+      console.log('id:', id);
 
       let getOffre = await fetch(
         `${url}/api/offre/myoffre/${id}`,
@@ -114,15 +116,39 @@ export const Offre = () => {
                           : 'https://picsum.photos/700',
                       }}
                     />
-
-                    <Card.Content>
-                      <Text variant="titleLarge">{item.title}</Text>
-                      <Text variant="bodyMedium">{item.Description}</Text>
-                      <Text variant="bodyMedium">prix : {item.prix} dt</Text>
-                      <Text variant="bodyMedium">
-                        nombre de jour : {item.deadLine}
-                      </Text>
-                    </Card.Content>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                      }}>
+                      <Card.Content>
+                        <Text variant="titleLarge">{item.title}</Text>
+                        <Text variant="bodyMedium">
+                          {' '}
+                          {item.Description.length > 30
+                            ? item.Description.slice(0, 30).concat(
+                                '...voir detail',
+                              )
+                            : item.Description}
+                        </Text>
+                        <Text variant="bodyMedium">prix : {item.prix} dt</Text>
+                        <Text variant="bodyMedium">
+                          nombre de jour : {item.deadLine}
+                        </Text>
+                      </Card.Content>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-around',
+                          width: width / 3,
+                          alignItems: 'flex-end',
+                          alignContent: 'flex-end',
+                          marginBottom: '2%',
+                        }}>
+                        <AntDesign name="edit" color="#666" size={25} />
+                        <AntDesign name="delete" color="red" size={25} />
+                      </View>
+                    </View>
                     {/* <Card.Actions>
                   <Button>Posutler</Button>
                 </Card.Actions> */}
@@ -131,7 +157,8 @@ export const Offre = () => {
               })}
             </View>
           ) : (
-            <View style={{justifyContent: 'center', alignItems: 'center', flex:1}}>
+            <View
+              style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
               <Text
                 style={{
                   fontSize: 18,

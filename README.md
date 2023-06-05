@@ -1,5 +1,6 @@
 # postiiMobile
-
+server is deploy on 
+# https://railway.app/
 # To run this app you follow this steps 
 
 

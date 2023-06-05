@@ -12,6 +12,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Color} from '../utils/Color';
 import OffreStack from './OffreStack';
+
+import HomeStack from './HomeStack';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +67,7 @@ const Navigation = () => {
           })}>
           <Tab.Screen
             name="Home"
-            component={Home}
+            component={HomeStack}
             options={{headerShown: false}}
           />
           <Tab.Screen
