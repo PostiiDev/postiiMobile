@@ -113,6 +113,7 @@ const Home = () => {
               data={offre}
               renderItem={({item}) => <CardOffre item={item} />}
               ListEmptyComponent={<Text>il n'ya pas des offre pour le moment</Text>}
+              initialNumToRender={50}
             />
           )}
         </View>
