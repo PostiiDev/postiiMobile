@@ -1,4 +1,10 @@
-import {StyleSheet, View, ScrollView, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  RefreshControl,
+  Pressable,
+} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {Color} from '../utils/Color';
 import {useRecoilState, useRecoilValue} from 'recoil';
@@ -47,9 +53,7 @@ export const Offre = () => {
       setLoading(() => true);
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
-      console.log('parsedValue:', parsedValue);
       let id = parsedValue.userInfo._id;
-      console.log('id:', id);
 
       let getOffre = await fetch(
         `${url}/api/offre/myoffre/${id}`,
@@ -109,13 +113,16 @@ export const Offre = () => {
                       subtitle={moment(item.createdAt).locale('fr').fromNow()}
                       left={LeftContent}
                     />
-                    <Card.Cover
-                      source={{
-                        uri: item.cover
-                          ? item.cover
-                          : 'https://picsum.photos/700',
-                      }}
-                    />
+                    <Pressable
+                      onPress={() => navigation.navigate('OffreDetail')}>
+                      <Card.Cover
+                        source={{
+                          uri: item.cover
+                            ? item.cover
+                            : 'https://picsum.photos/700',
+                        }}
+                      />
+                    </Pressable>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -123,8 +130,9 @@ export const Offre = () => {
                       }}>
                       <Card.Content>
                         <Text variant="titleLarge">{item.title}</Text>
-                        <Text variant="bodyMedium">
-                          {' '}
+                        <Text
+                          variant="bodyMedium"
+                          onPress={() => navigation.navigate('OffreDetail')}>
                           {item.Description.length > 30
                             ? item.Description.slice(0, 30).concat(
                                 '...voir detail',
