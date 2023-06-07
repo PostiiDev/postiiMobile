@@ -34,6 +34,7 @@ const CardOffre = ({item}) => {
 
   const getOffreStatus = async (id, sellerId) => {
     let result = await postulerOffre(id, sellerId);
+    console.log('result: after send postuler to offre ====> ', result)
     if (result == 201) {
       showMessage({
         message: 'vous avez postuler a cet offre!',
@@ -56,13 +57,14 @@ const CardOffre = ({item}) => {
   };
 
   const postulerOffre = async (id, sellerId) => {
+    console.log('Offre ID ==========> :', id)
     setBlock(() => true);
     try {
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
       let userInfo = parsedValue.userInfo._id;
       let data = {
-        prix: 200,
+        prix: item.prix,
         msg: 'i m realy intrested in this offre',
         title: '',
         buyerId: userInfo,
