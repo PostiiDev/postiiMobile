@@ -6,6 +6,7 @@ import {Color} from '../utils/Color';
 import {width} from '../utils/dimenion';
 import {useRecoilState} from 'recoil';
 import {isAuthenticatedUser} from '../atom/authtication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CardOffre = ({item}) => {
   const navigation = useNavigation();
@@ -31,26 +32,39 @@ const CardOffre = ({item}) => {
     }
   };
 
-  getOffreStatus = async () => {
+  getOffreStatus = async (id) => {
     let result = postulerOffre(id);
-    console.log('result:', result)
+    console.log('result:')
   };
   const postulerOffre = async (id) => {
-    console.log('id:', id)
-    let data = {};
+    console.log('id in postuler:', id)
+    let data = {
+      "prix": 200,
+      "msg": "i m realy intrested in this offre",
+      "title": "",
+      "buyerId": "647235c380928817876f2e0e",
+      "sellerId": "6462807af3c46e9589c49b0f",
+      "offreId": "6467bf45984e6e5d1da54d94"
+    }
 
     try {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify(data),
-      };
-      let url = '';
-      let result = await fetch(url, requestOptions);
-      return result.json();
+
+      let value = await AsyncStorage.getItem('user')
+      let parsedValue = JSON.parse(value)
+      let userInfo = parsedValue.userInfo._id;
+      console.log(' user_id:', userInfo);
+      return userInfo
+      // const requestOptions = {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Access-Control-Allow-Origin': '*',
+      //   },
+      //   body: JSON.stringify(data),
+      // };
+      // let url = '';
+      // let result = await fetch(url, requestOptions);
+      // return result.json();
     } catch (e) {}
   };
 

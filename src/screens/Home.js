@@ -37,10 +37,7 @@ const Home = () => {
   const onChangeSearch = query => {
     console.log('query:', query);
   };
-  const signout = async () => {
-    await AsyncStorage.removeItem('user');
-    setIsAuthenticated(() => false);
-  };
+
 
   useEffect(() => {
     if (isFocused) {
