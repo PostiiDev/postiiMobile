@@ -14,6 +14,7 @@ import {Color} from '../utils/Color';
 import OffreStack from './OffreStack';
 
 import HomeStack from './HomeStack';
+import HomeRegister from '../screens/HomeRegister';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +32,7 @@ const Navigation = () => {
 
       if (value !== null) {
         setIsAuthenticated(true);
-        setUser(()=> value);
+        setUser(() => value);
       }
     } catch (e) {}
   };
@@ -68,7 +69,7 @@ const Navigation = () => {
           <Tab.Screen
             name="Home"
             component={HomeStack}
-            options={{headerShown: false}}
+            options={{headerShown: false, }}
           />
           <Tab.Screen
             name="Offre"
@@ -77,7 +78,7 @@ const Navigation = () => {
           />
         </Tab.Navigator>
       ) : (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="First">
           <Stack.Screen
             name="Register"
             component={Register}
@@ -86,6 +87,11 @@ const Navigation = () => {
           <Stack.Screen
             name="Login"
             component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="First"
+            component={HomeRegister}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

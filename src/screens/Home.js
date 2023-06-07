@@ -68,7 +68,7 @@ const Home = () => {
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
       let id = parsedValue.userInfo._id;
-      console.log('id:', id);
+      console.log(' user_id:', id);
 
       let getOffre = await fetch(`${url}/api/offre`, requestOptions);
       let response = getOffre.json();
@@ -79,6 +79,8 @@ const Home = () => {
         type: 'danger',
         backgroundColor: 'red',
       });
+      setLoading(false);
+
     } finally {
       setTimeout(() => {
         setLoading(false);
