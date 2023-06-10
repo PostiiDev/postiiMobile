@@ -71,7 +71,6 @@ const CardOffre = ({item}) => {
         sellerId: sellerId,
         offreId: id,
       };
-      console.table('data:', [data])
 
       const requestOptions = {
         method: 'POST',

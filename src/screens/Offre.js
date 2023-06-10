@@ -54,7 +54,6 @@ export const Offre = () => {
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
       let id = parsedValue.userInfo._id;
-      console.log('id:', id)
 
       let getOffre = await fetch(
         `${url}/api/offre/myoffre/${id}`,
@@ -140,12 +139,11 @@ export const Offre = () => {
                               )
                             : item.Description}
                         </Text>
-                        <Text variant="bodyMedium">prix : {item.prix} dt</Text>
                         <Text variant="bodyMedium">
-                          nombre de jour : {item.deadLine}
+                          date de livraison estimé : {moment(item.deadLine).format('DD-MM-YYYY') }
                         </Text>
                       </Card.Content>
-                      <View
+                      {/* <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-around',
@@ -156,11 +154,12 @@ export const Offre = () => {
                         }}>
                         <AntDesign name="edit" color="#666" size={25} />
                         <AntDesign name="delete" color="red" size={25} />
-                      </View>
+                      </View> */}
                     </View>
-                    {/* <Card.Actions>
-                  <Button>Posutler</Button>
-                </Card.Actions> */}
+                    <Card.Actions
+                    >
+                      <Button   onPress={() => navigation.navigate('OffreDetail', {item})}>Voir Detail</Button>
+                    </Card.Actions>
                   </Card>
                 );
               })}

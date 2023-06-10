@@ -4,6 +4,7 @@ import CreateOffre from '../screens/CreateOffre';
 import UpdateOffre from '../screens/UpdateOffre';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import OffreDetail from '../screens/OffreDetail';
+import {Image} from 'react-native'
 const Stack = createNativeStackNavigator();
 
 const OffreStack = () => {
@@ -17,19 +18,45 @@ const OffreStack = () => {
       <Stack.Screen
         name="OffreCreate"
         component={CreateOffre}
-        options={{headerShown: true, title: ''}}
+        options={{
+          headerShown: true,
+          title: '',
+          headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="OffreUpdate"
         component={UpdateOffre}
-        options={{headerShown: true, title: ''}}
+        options={{
+          headerShown: true,
+          title: '',
+          headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
+        }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="OffreDetail"
         component={OffreDetail}
-        options={{headerShown: true, title: ''}}
+        options={{
+          headerShown: true,
+          title: '',
+          headerRight: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
+        }}
       />
-  
     </Stack.Navigator>
   );
 };

@@ -31,7 +31,6 @@ import {
     const [searchQuery, setSearchQuery] = useState('');
   
     const onChangeSearch = query => {
-      console.log('query:', query);
     };
 
   
@@ -42,9 +41,10 @@ import {
     }, []);
     const getAllOffre = async () => {
       const data = await fetchAllOffre();
-      console.log('data:', data.length);
       if (data) {
         setOffre(() => data);
+      }else {
+        navigation.navigate('Login')
       }
     };
   
@@ -96,11 +96,10 @@ import {
                 <Button mode='contained' onPress={()=> navigation.navigate('Login')}>Commencer</Button>
                 </View>
               }
-              contentContainerStyle={{}}
               data={offre}
               renderItem={({item}) => <CardOffre item={item} />}
               ListEmptyComponent={
-                <Text>il n'ya pas des offre pour le moment</Text>
+                <Text style={{textAlign:'center', fontSize:18}}>il n'ya pas des offre pour le moment</Text>
               }
               initialNumToRender={10}
             />

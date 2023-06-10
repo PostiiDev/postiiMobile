@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Pressable, TouchableOpacity} from 'react-native';
+import {View, Text, Pressable, TouchableOpacity, Image} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import OffreDetail from '../screens/OffreDetail';
 import Home from '../screens/Home';
@@ -34,13 +34,26 @@ const HomeStack = () => {
               <AntDesign name="logout" color={Color.primary} size={25} />
             </TouchableOpacity>
           ),
+          headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
         }}
       />
 
       <Stack.Screen
         name="OffreDetail"
         component={OffreDetail}
-        options={{headerShown: true, title: ''}}
+        options={{headerShown: true, title: '',
+        headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="Proposition"
@@ -49,6 +62,12 @@ const HomeStack = () => {
           headerShown: true,
           title: 'Proposition',
           presentation: 'modal',
+          headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
         }}
       />
     </Stack.Navigator>

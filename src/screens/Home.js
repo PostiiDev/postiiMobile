@@ -4,6 +4,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useRecoilState, useRecoilValue} from 'recoil';
@@ -20,10 +21,9 @@ import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import CardOffre from '../components/CardOffre';
 import {Color} from '../utils/Color';
-import {height} from '../utils/dimenion';
+import {height, width} from '../utils/dimenion';
 const Home = () => {
   const [user, setUser] = useRecoilState(userInformation);
-  //console.log('user:', user.userInfo ?user.userInfo : 'no user exist here' )
   const [isAuthenticated, setIsAuthenticated] =
     useRecoilState(isAuthenticatedUser);
   const [loading, setLoading] = useState(false);
@@ -32,12 +32,34 @@ const Home = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const isFocused = useIsFocused();
-  const [searchQuery, setSearchQuery] = useState('');
-
+  const [search, setSearch] = useState('');
+    const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
   const onChangeSearch = query => {
-    console.log('query:', query);
   };
-
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = masterDataSource.filter(
+        function (item) {
+          const itemData = item.title
+            ? item.title.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(masterDataSource);
+      setSearch(text);
+    }
+  };
   useEffect(() => {
     if (isFocused) {
       getAllOffre();
@@ -47,6 +69,7 @@ const Home = () => {
     const data = await fetchAllOffre();
     if (data) {
       setOffre(() => data);
+      setFilteredDataSource(()=> data)
     }
   };
 
@@ -92,19 +115,25 @@ const Home = () => {
           <Text style={{paddingTop: '4%'}}>Loading ...</Text>
         </View>
       ) : (
-        <View style={{marginTop: '4%'}}>
+        <View style={{marginTop: '1%'}}>
+          <View style={{margin: '5%'}}>
+            <Searchbar
+              placeholder="rechercher un offre"
+              onChangeText={searchFilterFunction}
+              value={search}
+            />
+          </View>
+          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
+            Chercher votre Offre et commancer a travailler{' '}
+          </Text>
+          <Image
+            source={require('../assets/logo/logo.png')}
+            style={{height: height / 7, width: width}}
+          />
+         
           <FlatList
-            ListHeaderComponent={
-              <View style={{margin: '5%'}}>
-                <Searchbar
-                  placeholder="rechercher un offre"
-                  onChangeText={onChangeSearch}
-                  value={searchQuery}
-                />
-              </View>
-            }
             contentContainerStyle={{}}
-            data={offre}
+            data={filteredDataSource}
             renderItem={({item}) => <CardOffre item={item} />}
             ListEmptyComponent={
               <Text>il n'ya pas des offre pour le moment</Text>

@@ -12,5 +12,7 @@ export const userInformation = atom({
 
 export const apiUrl = atom({
   key: 'apiUrl',
-  default: 'https://server-production-0458.up.railway.app',
+  default: 'http://192.168.1.10:5000'
+  // default: 'https://server-production-0458.up.railway.app',
 });
+// 192.168.1.10

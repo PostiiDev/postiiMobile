@@ -82,7 +82,6 @@ const CreateOffre = () => {
 
     try {
       setLoading(() => true);
-      console.log('first image to upload! ', data);
 
       const xhr = new XMLHttpRequest();
       xhr.open(
@@ -91,8 +90,7 @@ const CreateOffre = () => {
       );
       xhr.onload = () => {
         const {url} = JSON.parse(xhr.responseText);
-        console.log('url:', url);
-        console.log('url:', url);
+    
         setImageUrl(() => url);
         setImageUrl(() => url);
 
@@ -101,11 +99,9 @@ const CreateOffre = () => {
       xhr.onerror = error => {
         setLoading(() => false);
 
-        console.log('err', error);
       };
       xhr.send(data);
     } catch (err) {
-      console.log('err', err);
     }
   };
   const {handleChange, handleBlur, handleSubmit, values, errors, touched} =
@@ -123,7 +119,7 @@ const CreateOffre = () => {
         //   Alert.alert('', "Vous devriez prendre des images pour l'offre");
         // } else {
           
-          console.log('values:', values);
+         // console.log('values:', values);
 
           const data = new FormData();
           data.append('file', files);
@@ -131,7 +127,7 @@ const CreateOffre = () => {
 
           try {
             setLoading(() => true);
-            console.log('first image to upload! ', data);
+            //console.log('first image to upload! ', data);
 
             const xhr = new XMLHttpRequest();
             xhr.open(
@@ -140,13 +136,13 @@ const CreateOffre = () => {
             );
             xhr.onload =async  () => {
               const {url} = JSON.parse(xhr.responseText);
-              console.log('url:', url);
+             // console.log('url:', url);
               setImageUrl(() => url);
               let value = await AsyncStorage.getItem('user');
               let parsedValue = JSON.parse(value);
               //console.log('parsedValue:', parsedValue)
               let id = parsedValue.userInfo._id;
-              console.log('id:', id)
+             // console.log('id:', id)
               // Once you have the URL, you can make the POST request to your server
               const postData = {
                 title: values.title,
@@ -156,9 +152,9 @@ const CreateOffre = () => {
                 prix: values.prix,
                 cover: url ? url : "",
               };
-              console.log('postData:', postData);
+              //console.log('postData:', postData);
               let newurl = `https://server-production-0458.up.railway.app/api/offre/${id}`
-              console.log('start possting.....',newurl );
+              //console.log('start possting.....',newurl );
               fetch(newurl, {
                 method: 'POST',
                 headers: {
@@ -169,7 +165,7 @@ const CreateOffre = () => {
                 .then(response => response.json())
                 .then(data => {
                   // Handle the response from the server
-                  console.log('Response from server:', data);
+                 // console.log('Response from server:', data);
                   setLoading(false);
 
                   // Do something with the response if needed
@@ -179,18 +175,16 @@ const CreateOffre = () => {
                   });
                 })
                 .catch(error => {
-                  console.log('Error:', error);
+                 // console.log('Error:', error);
                   // Handle the error if needed
                   setLoading(false);
                 });
             };
             xhr.onerror = error => {
               setLoading(() => false);
-              console.log('err', error);
             };
             xhr.send(data);
           } catch (err) {
-            console.log('err', err);
           }
        
       },

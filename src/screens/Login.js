@@ -63,9 +63,7 @@ export const Login = () => {
           });
 
           const data = await response.json();
-          console.log('data===========> \n:', data);
           const status = response.status;
-          console.log('status:', status);
 
           if (status === 200) {
             showMessage({

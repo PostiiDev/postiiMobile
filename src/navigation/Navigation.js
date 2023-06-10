@@ -12,7 +12,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Color} from '../utils/Color';
 import OffreStack from './OffreStack';
-
+import {Image} from 'react-native'
 import HomeStack from './HomeStack';
 import HomeRegister from '../screens/HomeRegister';
 const Stack = createNativeStackNavigator();
@@ -49,7 +49,7 @@ const Navigation = () => {
     <NavigationContainer>
       {isAuthenticated ? (
         <Tab.Navigator
-          initialRouteName="Home"
+          initialRouteName="Offre"
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
@@ -69,12 +69,28 @@ const Navigation = () => {
           <Tab.Screen
             name="Home"
             component={HomeStack}
-            options={{headerShown: false, }}
+            options={{
+              headerShown: false,
+              headerLeft: () => (
+                <Image
+                  style={{height: 50, width: 50}}
+                  source={require('../assets/logo/logo.png')}
+                />
+              ),
+            }}
           />
           <Tab.Screen
             name="Offre"
             component={OffreStack}
-            options={{headerShown: false}}
+            options={{
+              headerShown: false,
+              headerLeft: () => (
+                <Image
+                  style={{height: 50, width: 50}}
+                  source={require('../assets/logo/logo.png')}
+                />
+              ),
+            }}
           />
         </Tab.Navigator>
       ) : (

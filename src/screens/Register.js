@@ -84,7 +84,6 @@ export const Register = () => {
         matricule: '',
       },
       onSubmit: async values => {
-        console.log('values when submit ===========>\n:', values);
         setLoading(true);
         try {
           const api = `${url}/api/auth/register`;
@@ -97,9 +96,7 @@ export const Register = () => {
           });
 
           const data = await response.json();
-          console.log('data===========> \n:', data);
           const status = response.status;
-          console.log('status:', status);
           if (data.status == 0) {
             showMessage({
               message: "L'utilisateur existe déjà !",
@@ -108,7 +105,6 @@ export const Register = () => {
           }
 
           if (status === 201) {
-            console.log('auto login ##############""');
             showMessage({
               message: 'Success!',
               type: 'success',
