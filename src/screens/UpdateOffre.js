@@ -37,19 +37,18 @@ const CreateOffreSchema = Yup.object().shape({
     .min(3, 'le nom  doit comporter au moins 3 caractères '),
   Description: Yup.string()
     .required('La Description est requis*')
-    .min(3, 'le nom  doit comporter au moins 3 caractères '),
-  category: Yup.string().required('La category est requis*'),
-  deadLine: Yup.string().required('temp estimé est calculer par jours requis*'),
+    .min(3, 'le nom  doit comporter au moins 3 caractères ')
 });
 const UpdateOffre = ({route}) => {
   const {item} = route.params;
+  console.log('item:', item._id)
   const api = useRecoilValue(apiUrl);
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [refresh, setRefrech] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(item.deadLine));
   const [isPickerShow, setIsPickerShow] = useState(false);
 
   const takeimage = async () => {
@@ -121,15 +120,16 @@ const UpdateOffre = ({route}) => {
               title: values.title,
               Description: values.Description,
               category: values.category,
-              deadLine: +values.deadLine,
-              prix: values.prix,
-              cover: url ? url : '',
+              deadLine: date,
+              cover: url ? url : item.cover,
             };
-            //console.log('postData:', postData);
-            let newurl = `https://server-production-0458.up.railway.app/api/offre/${id}`;
-            //console.log('start possting.....',newurl );
+            console.log('postData:', postData)
+
+            let newurl = `${api}/api/offre/${item._id}/${id}`;
+            console.log('newurl:', newurl)
+            console.log('start possting.....',newurl );
             fetch(newurl, {
-              method: 'POST',
+              method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -163,7 +163,6 @@ const UpdateOffre = ({route}) => {
 
   const onChange = (event, value) => {
     setIsPickerShow(false);
-    console.log('value:', value);
     setDate(value);
     if (Platform.OS === 'android') {
       setIsPickerShow(false);
