@@ -41,7 +41,6 @@ const CreateOffreSchema = Yup.object().shape({
 });
 const UpdateOffre = ({route}) => {
   const {item} = route.params;
-  console.log('item:', item._id)
   const api = useRecoilValue(apiUrl);
   const [files, setFiles] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
@@ -140,7 +139,10 @@ const UpdateOffre = ({route}) => {
                 // Handle the response from the server
                 // console.log('Response from server:', data);
                 setLoading(false);
-
+                showMessage({
+                  message: 'offre est a jour avec success!',
+                  type: 'success',
+                });
                 // Do something with the response if needed
                 navigation.reset({
                   index: 0,
@@ -151,10 +153,20 @@ const UpdateOffre = ({route}) => {
                 // console.log('Error:', error);
                 // Handle the error if needed
                 setLoading(false);
+                showMessage({
+                  message: 'Network request failed!',
+                  type: 'danger',
+                  backgroundColor: 'red',
+                });
               });
           };
           xhr.onerror = error => {
             setLoading(() => false);
+            showMessage({
+              message: 'Network request failed! when upload image',
+              type: 'danger',
+              backgroundColor: 'red',
+            });
           };
           xhr.send(data);
         } catch (err) {}
@@ -192,12 +204,12 @@ const UpdateOffre = ({route}) => {
       ) : (
         <ScrollView style={{padding: 10, flex: 1, marginBottom: 5}}>
           <Card>
-            {files.length > 0 ? (
+            {item.cover.length > 0 ? (
               <Card.Cover
                 source={{
-                  uri: `data:image/png;base64, ${result.assets[0].base64}`,
+                  uri: `${item.cover}`,
                 }}
-                style={{width: width, height: 100}}
+                style={{width: width, height: 150}}
                 resizeMode="center"
               />
             ) : (
