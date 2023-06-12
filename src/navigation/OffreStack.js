@@ -21,7 +21,7 @@ const OffreStack = () => {
         options={{
           headerShown: true,
           title: '',
-          headerLeft: () => (
+          headerRight: () => (
             <Image
               style={{height: 50, width: 50}}
               source={require('../assets/logo/logo.png')}
@@ -35,7 +35,7 @@ const OffreStack = () => {
         options={{
           headerShown: true,
           title: '',
-          headerLeft: () => (
+          headerRight: () => (
             <Image
               style={{height: 50, width: 50}}
               source={require('../assets/logo/logo.png')}

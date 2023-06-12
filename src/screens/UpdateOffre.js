@@ -23,6 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorMessage from '../components/ErrorMessage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {PaperSelect} from 'react-native-paper-select';
 
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
@@ -254,19 +255,7 @@ const UpdateOffre = ({route}) => {
             style={styles.input}
           />
           <ErrorMessage errorValue={touched.category && errors.category} />
-          {/* <TextInput
-            value={values.deadLine}
-            left={<TextInput.Icon icon="subtitles-outline" />}
-            placeholder="Enter la date final de livraison par jours"
-            autoCapitalize="none"
-            onChangeText={handleChange('deadLine')}
-            onBlur={handleBlur('deadLine')}
-            error={errors.deadLine}
-            touched={touched.deadLine}
-            style={styles.input}
-            keyboardType="numeric"
-          />
-          <ErrorMessage errorValue={touched.deadLine && errors.deadLine} /> */}
+    
           <Pressable
             onPress={() => showPicker()}
             style={styles.datePickerContainer}>
@@ -315,7 +304,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   input: {
-    marginHorizontal: width / 5,
+    marginHorizontal: height / 15,
     marginVertical: 5,
     backgroundColor: '#fff',
   },
@@ -341,16 +330,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 50,
   },
-  input: {
-    padding: 10,
-    flex: 1,
-    fontSize: 16,
-    color: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   dateText: {
     // color: Color.secondary ,
     fontSize: 18,
   },
+  input: {
+    marginHorizontal: width / 10,
+    marginVertical: 5,
+    backgroundColor: '#fff',
+  },
+
 });
