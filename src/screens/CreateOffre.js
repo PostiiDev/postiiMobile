@@ -36,7 +36,6 @@ const CreateOffreSchema = Yup.object().shape({
     .min(3, 'le nom  doit comporter au moins 3 caractères '),
   category: Yup.string().required('La category est requis*'),
   deadLine: Yup.string().required('temp estimé est calculer par jours requis*'),
-  prix: Yup.string().required('prix est requis*'),
 });
 
 const CreateOffre = () => {
@@ -149,7 +148,6 @@ const CreateOffre = () => {
                 Description: values.Description,
                 category: values.category,
                 deadLine: +values.deadLine,
-                prix: values.prix,
                 cover: url ? url : "",
               };
               //console.log('postData:', postData);
@@ -285,19 +283,7 @@ const CreateOffre = () => {
             keyboardType="numeric"
           />
           <ErrorMessage errorValue={touched.deadLine && errors.deadLine} />
-          <TextInput
-            value={values.prix}
-            left={<TextInput.Icon icon="subtitles-outline" />}
-            placeholder="Enter Votre prix"
-            autoCapitalize="none"
-            onChangeText={handleChange('prix')}
-            onBlur={handleBlur('prix')}
-            error={errors.prix}
-            touched={touched.prix}
-            style={styles.input}
-            keyboardType="numeric"
-          />
-          <ErrorMessage errorValue={touched.prix && errors.prix} />
+      
           <Button onPress={handleSubmit} mode="contained-tonal">
             Creer votre offre
           </Button>

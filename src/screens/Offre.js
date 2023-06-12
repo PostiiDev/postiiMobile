@@ -17,7 +17,7 @@ import moment from 'moment/min/moment-with-locales';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {width} from '../utils/dimenion';
-
+import Markdown from 'react-native-markdown-display';
 const LeftContent = props => (
   <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
 );
@@ -114,7 +114,9 @@ export const Offre = () => {
                       left={LeftContent}
                     />
                     <Pressable
-                      onPress={() => navigation.navigate('OffreDetail')}>
+                      onPress={() =>
+                        navigation.navigate('OffreDetail', {item})
+                      }>
                       <Card.Cover
                         source={{
                           uri: item.cover
@@ -130,17 +132,19 @@ export const Offre = () => {
                       }}>
                       <Card.Content>
                         <Text variant="titleLarge">{item.title}</Text>
-                        <Text
-                          variant="bodyMedium"
-                          onPress={() => navigation.navigate('OffreDetail')}>
-                          {item.Description.length > 30
-                            ? item.Description.slice(0, 30).concat(
-                                '...voir detail',
-                              )
-                            : item.Description}
-                        </Text>
+                        <Pressable
+                          onPress={() =>
+                            navigation.navigate('OffreDetail', {item})
+                          }>
+                          <Markdown>
+                            {item.Description.slice(0, 80).concat(
+                              '... voir detail',
+                            )}
+                          </Markdown>
+                        </Pressable>
                         <Text variant="bodyMedium">
-                          date de livraison estimé : {moment(item.deadLine).format('DD-MM-YYYY') }
+                          date de livraison estimé :{' '}
+                          {moment(item.deadLine).format('DD-MM-YYYY')}
                         </Text>
                       </Card.Content>
                       {/* <View
@@ -156,9 +160,13 @@ export const Offre = () => {
                         <AntDesign name="delete" color="red" size={25} />
                       </View> */}
                     </View>
-                    <Card.Actions
-                    >
-                      <Button   onPress={() => navigation.navigate('OffreDetail', {item})}>Voir Detail</Button>
+                    <Card.Actions>
+                      <Button
+                        onPress={() =>
+                          navigation.navigate('OffreDetail', {item})
+                        }>
+                        Voir Detail
+                      </Button>
                     </Card.Actions>
                   </Card>
                 );
