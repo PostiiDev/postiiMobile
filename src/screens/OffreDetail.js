@@ -16,8 +16,8 @@ import {Color} from '../utils/Color';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import Markdown from 'react-native-markdown-display';
-import { useRecoilValue } from 'recoil';
-import { apiUrl } from '../atom/authtication';
+import {useRecoilValue} from 'recoil';
+import {apiUrl} from '../atom/authtication';
 const LeftContent = props => (
   <Avatar.Icon {...props} icon="lightbulb-on-outline" color="#fff" />
 );
@@ -26,7 +26,7 @@ const OffreDetail = ({route}) => {
   const {item} = route.params;
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-const api = useRecoilValue(apiUrl)
+  const api = useRecoilValue(apiUrl);
   const openModal = item => {
     setModalVisible(() => true);
   };
@@ -142,8 +142,7 @@ const api = useRecoilValue(apiUrl)
           <Card.Content>
             <Text variant="titleLarge">{item.title}</Text>
             <Text variant="bodyMedium"> description :</Text>
-            <Markdown
-            >{item.Description}</Markdown>
+            <Markdown>{item.Description}</Markdown>
 
             <Text
               variant="bodyMedium"
@@ -161,7 +160,10 @@ const api = useRecoilValue(apiUrl)
             </Text>
           </Card.Content>
         </View>
-        <View style={{marginTop: '2%', paddingLeft: 20, flexDirection: 'row'}}>
+        <Pressable
+          disabled={item.proposals.length == 0}
+          style={{marginTop: '2%', paddingLeft: 20, flexDirection: 'row'}}
+          onPress={() => navigation.navigate('Proposition', {id: item._id})}>
           <Text
             style={{
               color: '#000',
@@ -174,7 +176,7 @@ const api = useRecoilValue(apiUrl)
             {' '}
             {item.proposals.length}
           </Text>
-        </View>
+        </Pressable>
 
         <View
           style={{
