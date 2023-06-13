@@ -67,9 +67,10 @@ const Home = () => {
   }, []);
   const getAllOffre = async () => {
     const data = await fetchAllOffre();
+    console.log('data:', data)
     if (data) {
-      setOffre(() => data);
-      setFilteredDataSource(()=> data)
+      setOffre(() => data.data);
+      setFilteredDataSource(()=> data.data)
     }
   };
 
@@ -133,7 +134,7 @@ const Home = () => {
          
           <FlatList
             contentContainerStyle={{}}
-            data={filteredDataSource}
+            data={offre}
             renderItem={({item}) => <CardOffre item={item} />}
             ListEmptyComponent={
               <Text>il n'ya pas des offre pour le moment</Text>

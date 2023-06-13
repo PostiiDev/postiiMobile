@@ -20,7 +20,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {width} from '../utils/dimenion';
 import Markdown from 'react-native-markdown-display';
 import {FlashList} from '@shopify/flash-list';
-import PropostionCard from '../components/propostionCard';
+import PropostionCard from '../components/PropostionCard';
+
 const Proposition = ({route}) => {
   const {id} = route.params;
   const [loading, setLoading] = useState(false);
@@ -75,13 +76,24 @@ const Proposition = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Text>Proposition</Text>
       <FlatList
         data={offre}
-        renderItem={({item}) => {
-          console.log(offre.length)
-          return <PropostionCard item={item} />;
+        renderItem={({item, index}) => {
+          return <PropostionCard item={item} index={index}/>;
         }}
+        ListHeaderComponent={
+          <View style={{width: '90%', alignSelf: 'center'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+                letterSpacing: 1.2,
+              }}>
+              Vos Proposition
+            </Text>
+          </View>
+        }
       />
     </View>
   );
