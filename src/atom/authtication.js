@@ -12,7 +12,7 @@ export const userInformation = atom({
 
 export const apiUrl = atom({
   key: 'apiUrl',
-  default: 'http://192.168.1.5:5000',
+  default: 'http://192.168.0.3:5000',
   // default: 'https://server-production-0458.up.railway.app',
 });
 export const selectedCategories = atom({

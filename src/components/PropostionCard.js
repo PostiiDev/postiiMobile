@@ -6,10 +6,12 @@ import {Color} from '../utils/Color';
 import {useRecoilValue} from 'recoil';
 import {apiUrl} from '../atom/authtication';
 import {showMessage} from 'react-native-flash-message';
+import { useNavigation } from '@react-navigation/native';
 const PropostionCard = ({item, index}) => {
   const {enterpriseId, proposition} = item;
   const [modalVisible, setModalVisible] = useState(false);
   const api = useRecoilValue(apiUrl);
+  const navigation = useNavigation()
   const openModal = () => {
     setModalVisible(true);
   };
@@ -30,12 +32,20 @@ const PropostionCard = ({item, index}) => {
       .then(response => response.json())
       .then(data => {
         // Handle the response data
-        console.log('data comming from response', data);
+       
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "AllOffre" }],
+        });
         showMessage({
           message: 'vous avez accepter  cet offre',
           type: 'success',
         });
         closeModal();
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "AllOffre" }],
+        });
       })
       .catch(error => {
         // Handle any errors
@@ -45,6 +55,10 @@ const PropostionCard = ({item, index}) => {
           message: 'Network request failed!',
           type: 'danger',
           backgroundColor: 'red',
+        })
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "AllOffre" }],
         });
       });
   };
@@ -125,7 +139,7 @@ export default PropostionCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: height / 3,
+    height: height / 2.8,
     width: '90%',
     alignSelf: 'center',
     marginVertical: '1%',
