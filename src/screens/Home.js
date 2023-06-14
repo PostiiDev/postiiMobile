@@ -70,7 +70,6 @@ const Home = () => {
     console.log('data:', data)
     if (data) {
       setOffre(() => data.data);
-      setFilteredDataSource(()=> data.data)
     }
   };
 

@@ -42,7 +42,7 @@ import {
     const getAllOffre = async () => {
       const data = await fetchAllOffre();
       if (data) {
-        setOffre(() => data);
+        setOffre(() => data.data);
       }else {
         navigation.navigate('Login')
       }

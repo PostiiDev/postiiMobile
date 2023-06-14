@@ -9,14 +9,16 @@ import {Color} from '../utils/Color';
 import {useRecoilState} from 'recoil';
 import {isAuthenticatedUser} from '../atom/authtication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MakeProposition from '../screens/MakeProposition';
 const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
   const [isAuthenticated, setIsAuthenticated] =
     useRecoilState(isAuthenticatedUser);
   const logout = async () => {
-    setIsAuthenticated(!isAuthenticated);
     await AsyncStorage.clear();
+
+    setIsAuthenticated(() => false);
   };
   return (
     <Stack.Navigator initialRouteName="HomePage">
@@ -46,8 +48,10 @@ const HomeStack = () => {
       <Stack.Screen
         name="OffreDetail"
         component={OffreDetail}
-        options={{headerShown: true, title: '',
-        headerLeft: () => (
+        options={{
+          headerShown: true,
+          title: '',
+          headerLeft: () => (
             <Image
               style={{height: 50, width: 50}}
               source={require('../assets/logo/logo.png')}
@@ -58,6 +62,21 @@ const HomeStack = () => {
       <Stack.Screen
         name="Proposition"
         component={Proposition}
+        options={{
+          headerShown: true,
+          title: 'Proposition',
+          presentation: 'modal',
+          headerLeft: () => (
+            <Image
+              style={{height: 50, width: 50}}
+              source={require('../assets/logo/logo.png')}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="MakeProposition"
+        component={MakeProposition}
         options={{
           headerShown: true,
           title: 'Proposition',

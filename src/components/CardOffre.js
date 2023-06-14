@@ -4,8 +4,8 @@ import {View, Pressable, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Color} from '../utils/Color';
 import {width} from '../utils/dimenion';
-import {useRecoilState} from 'recoil';
-import {isAuthenticatedUser} from '../atom/authtication';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {apiUrl, isAuthenticatedUser} from '../atom/authtication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
 
@@ -14,6 +14,7 @@ const CardOffre = ({item}) => {
   const [block, setBlock] = React.useState(false);
   const [isAuthenticated, setIsAuthenticated] =
     useRecoilState(isAuthenticatedUser);
+    const api =useRecoilValue(apiUrl)
   const voirDetail = (id, sellerId) => {
     if (isAuthenticated) {
       //navigation.navigate('OffreDetail');
@@ -58,15 +59,20 @@ const CardOffre = ({item}) => {
 
   const postulerOffre = async (id, sellerId) => {
     console.log('Offre ID ==========> :', id)
+    // prix: req.body.prix,
+    // msg: req.body.msg,
+    // title: req.title,
+    // buyerId: req.body.buyerId,
+    // sellerId: Off.userId,
+    // offreId: req.params.id,
     setBlock(() => true);
     try {
       let value = await AsyncStorage.getItem('user');
       let parsedValue = JSON.parse(value);
       let userInfo = parsedValue.userInfo._id;
       let data = {
-        prix: item.prix,
+        prix: "3960",
         msg: 'i m realy intrested in this offre',
-        title: '',
         buyerId: userInfo,
         sellerId: sellerId,
         offreId: id,
@@ -80,7 +86,7 @@ const CardOffre = ({item}) => {
         },
         body: JSON.stringify(data),
       };
-      let url = `https://server-production-30a9.up.railway.app/api/propo/${id}`;
+      let url = `${api}/api/propo/${id}`;
       let result = await fetch(url, requestOptions);
       return result.status;
     } catch (e) {
@@ -114,7 +120,6 @@ const CardOffre = ({item}) => {
             ? item.Description.slice(0, 30).concat('...voir detail')
             : item.Description}
         </Text>
-        <Text style={{paddingLeft: 10}}> prix : {item.prix} dt</Text>
       </View>
       <Pressable
         disabled={block}
