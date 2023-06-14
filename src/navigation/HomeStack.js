@@ -79,9 +79,9 @@ const HomeStack = () => {
         component={MakeProposition}
         options={{
           headerShown: true,
-          title: 'Proposition',
+          title: '',
           presentation: 'modal',
-          headerLeft: () => (
+          headerRight: () => (
             <Image
               style={{height: 50, width: 50}}
               source={require('../assets/logo/logo.png')}

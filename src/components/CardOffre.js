@@ -17,8 +17,8 @@ const CardOffre = ({item}) => {
     const api =useRecoilValue(apiUrl)
   const voirDetail = (id, sellerId) => {
     if (isAuthenticated) {
-      //navigation.navigate('OffreDetail');
-      getOffreStatus(id, sellerId);
+      navigation.navigate('MakeProposition', {item, id, sellerId });
+      // getOffreStatus(id, sellerId);
     } else {
       Alert.alert('Note', "vous devez vous inscrire pour voir l'offre", [
         {
@@ -110,7 +110,7 @@ const CardOffre = ({item}) => {
       </Pressable>
 
       <View style={{flexDirection: 'column'}}>
-        <Text style={{paddingLeft: 10}}> categories : {item.category}</Text>
+        <Text style={{paddingLeft: 10, color:Color.primary}}> categories : {item.category}</Text>
 
         <Text
           disabled={block}

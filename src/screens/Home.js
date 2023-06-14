@@ -67,7 +67,6 @@ const Home = () => {
   }, []);
   const getAllOffre = async () => {
     const data = await fetchAllOffre();
-    console.log('data:', data)
     if (data) {
       setOffre(() => data.data);
     }
@@ -115,20 +114,21 @@ const Home = () => {
           <Text style={{paddingTop: '4%'}}>Loading ...</Text>
         </View>
       ) : (
-        <View style={{marginTop: '1%'}}>
-          <View style={{margin: '5%'}}>
+        <View style={{marginTop: '1%', flex:1}}>
+        <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
+          Trouver ici les meilleurs service en ligne
+          </Text>
+          <View style={{marginHorizontal: '5%'}}>
             <Searchbar
               placeholder="rechercher un offre"
               onChangeText={searchFilterFunction}
               value={search}
             />
           </View>
-          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
-            Chercher votre Offre et commancer a travailler{' '}
-          </Text>
+       
           <Image
             source={require('../assets/logo/logo.png')}
-            style={{height: height / 7, width: width}}
+            style={{height: height / 10, width: width}}
           />
          
           <FlatList
