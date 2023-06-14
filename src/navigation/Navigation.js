@@ -15,6 +15,7 @@ import OffreStack from './OffreStack';
 import {Image} from 'react-native'
 import HomeStack from './HomeStack';
 import HomeRegister from '../screens/HomeRegister';
+import Profile from '../screens/Profile';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -58,6 +59,9 @@ const Navigation = () => {
                 iconName = focused ? 'md-home-outline' : 'md-home-outline';
               } else if (route.name === 'Offre') {
                 iconName = focused ? 'ios-list' : 'ios-list-outline';
+              }else if (route.name === 'Profile') {
+                iconName = focused ? 'person-outline' : 'person-outline';
+
               }
 
               // You can return any component that you like here!
@@ -84,7 +88,20 @@ const Navigation = () => {
             component={OffreStack}
             options={{
               headerShown: false,
-              headerLeft: () => (
+              headerRight: () => (
+                <Image
+                  style={{height: 50, width: 50}}
+                  source={require('../assets/logo/logo.png')}
+                />
+              ),
+            }}
+          />
+             <Tab.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              headerShown: false,
+              headerRight: () => (
                 <Image
                   style={{height: 50, width: 50}}
                   source={require('../assets/logo/logo.png')}
