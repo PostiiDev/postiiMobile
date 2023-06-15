@@ -3,11 +3,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  ActivityIndicator,
   Dimensions,
-  FlatList,
   TouchableOpacity,
-  Pressable,
   TextInput,
   ScrollView,
 } from 'react-native';
@@ -15,91 +12,16 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/native';
 import { width } from '../utils/dimenion';
 
-const dummy_img =
-  'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/user.png';
-const bg = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg';
 
 const profilePictureWidth = Dimensions.get('window').width * 0.4;
 
-// const ProfileScreenHeader = ({ user, isMe = false }) => {
-//   const navigation = useNavigation();
 
-//   const signOut = async () => {
-//     console.warn("Sign out");
-//   };
-
-//   if (!user) {
-//     return <ActivityIndicator />;
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Image source={{ uri: bg }} style={styles.bg} />
-//       <Image source={{ uri: user?.image || dummy_img }} style={styles.image} />
-
-//       <Text style={styles.name}>{user.name}</Text>
-
-//       {isMe && (
-//         <>
-//           <View style={styles.buttonsContainer}>
-//             <Pressable
-//               style={[styles.button, { backgroundColor: "royalblue" }]}
-//             >
-//               <AntDesign name="pluscircle" size={16} color="white" />
-//               <Text style={[styles.buttonText, { color: "white" }]}>
-//                 Add to Story
-//               </Text>
-//             </Pressable>
-//             <Pressable
-//               style={styles.button}
-//               onPress={() => navigation.navigate("Update Profile")}
-//             >
-//               <MaterialCommunityIcons name="pencil" size={16} color="black" />
-//               <Text style={styles.buttonText}>Edit Profile</Text>
-//             </Pressable>
-//             <Pressable
-//               onPress={signOut}
-//               style={[styles.button, { flex: 0, width: 50 }]}
-//             >
-//               <MaterialIcons name="logout" size={16} color="black" />
-//             </Pressable>
-//           </View>
-//         </>
-//       )}
-
-//       <View style={styles.textLine}>
-//         <Entypo
-//           name="graduation-cap"
-//           size={18}
-//           color="gray"
-//           style={{ width: 25 }}
-//         />
-//         <Text>Graduated university</Text>
-//       </View>
-
-//       <View style={styles.textLine}>
-//         <Ionicons name="time" size={18} color="gray" style={{ width: 25 }} />
-//         <Text>Joined on October 2013</Text>
-//       </View>
-
-//       <View style={styles.textLine}>
-//         <Entypo
-//           name="location-pin"
-//           size={18}
-//           color="gray"
-//           style={{ width: 25 }}
-//         />
-//         <Text>From Tenerife</Text>
-//       </View>
-//     </View>
-//   );
-// };
 
 const Profile = () => {
   const route = useRoute();
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{flex: 1, backgroundColor:"#fff"}}>
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerContent}>
@@ -130,18 +52,19 @@ const Profile = () => {
             <TouchableOpacity style={styles.buttonContainer}>
               <Text>Edit </Text>
             </TouchableOpacity>
-            {/* <Text style={styles.description}>
-            Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis,
-            omittam deseruisse consequuntur ius an,
-          </Text> */}
+     
           <View style={{margin: '3%', width:width}}>
-            <TextInput placeholder="votre nom"  style={{margin:10}}/>
-            <TextInput placeholder="votre email"style={{margin:10}} />
-            <TextInput placeholder="numéro du téléphone" style={{margin:10}}/>
+            <TextInput placeholder="votre nom"  style={{marginHorizontal:30, }}/>
+            <TextInput placeholder="votre email" style={{marginHorizontal:30,}} />
+            <TextInput placeholder="numéro du téléphone" style={{marginHorizontal:30, }}/>
          
           </View>
           </View>
         
+        </View>
+        <View style={{alignSelf:'center',backgroundColor:'#00CED1', borderRadius:10}}>
+        <Text style={{paddingHorizontal:30, padding:10, color:"fff", fontSize:18}}>Submit</Text>
+
         </View>
       </View>
     </ScrollView>
@@ -152,8 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    alignItems: 'center',
-    padding: 10,
+
   },
   bg: {
     width: '100%',
