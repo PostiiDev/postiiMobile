@@ -6,9 +6,14 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  TouchableOpacity,
   Pressable,
+  TextInput,
+  ScrollView,
 } from 'react-native';
+
 import {useNavigation, useRoute} from '@react-navigation/native';
+import { width } from '../utils/dimenion';
 
 const dummy_img =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/user.png';
@@ -94,20 +99,52 @@ const Profile = () => {
   const route = useRoute();
 
   return (
-    <>
-      <Text>Profile Screen</Text>
-      {/* <FlatList
-        data={user.posts}
-        renderItem={({ item }) => <FeedPost post={item} />}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
-          <>
-            <ProfileScreenHeader user={user} isMe={true} />
-            <Text style={styles.sectionTitle}>Posts</Text>
-          </>
-        )}
-      /> */}
-    </>
+    <ScrollView style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerContent}>
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+              }}
+            />
+            <Text style={styles.name}>John Doe</Text>
+          </View>
+        </View>
+
+        <View style={styles.profileDetail}>
+          <View style={styles.detailContent}>
+            <Text style={styles.title}>Offre</Text>
+            <Text style={styles.count}>5</Text>
+          </View>
+          <View style={styles.detailContent}>
+            <Text style={styles.title}>Proposition</Text>
+            <Text style={styles.count}>142</Text>
+          </View>
+        </View>
+
+        <View style={styles.body}>
+          
+          <View style={styles.bodyContent}>
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Text>Edit </Text>
+            </TouchableOpacity>
+            {/* <Text style={styles.description}>
+            Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis,
+            omittam deseruisse consequuntur ius an,
+          </Text> */}
+          <View style={{margin: '3%', width:width}}>
+            <TextInput placeholder="votre nom"  style={{margin:10}}/>
+            <TextInput placeholder="votre email"style={{margin:10}} />
+            <TextInput placeholder="numéro du téléphone" style={{margin:10}}/>
+         
+          </View>
+          </View>
+        
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -169,6 +206,71 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     fontWeight: '500',
     fontSize: 18,
+  },
+  header: {},
+  headerContent: {
+    padding: 30,
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: 'white',
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 22,
+    color: '#FFFFFF',
+    fontWeight: '600',
+  },
+  profileDetail: {
+    alignSelf: 'center',
+    marginTop: 200,
+    alignItems: 'center',
+    flexDirection: 'row',
+    position: 'absolute',
+    backgroundColor: '#ffffff',
+  },
+  detailContent: {
+    margin: 10,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    color: '#00CED1',
+  },
+  count: {
+    fontSize: 18,
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 30,
+    marginTop: 40,
+  },
+  textInfo: {
+    fontSize: 18,
+    marginTop: 20,
+    color: '#696969',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    width: 250,
+    borderRadius: 30,
+    backgroundColor: '#00CED1',
+  },
+  description: {
+    fontSize: 20,
+    color: '#00CED1',
+    marginTop: 10,
+    textAlign: 'center',
   },
 });
 
