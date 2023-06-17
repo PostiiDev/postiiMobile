@@ -163,7 +163,7 @@ const Profile = () => {
           console.log('User deletion failed.');
           // Handle the failure scenario
           showMessage({
-            message: 'il sagit que vous avez des propostion',
+            message: 'netWork Failed!',
             color: 'warning',
             icon: 'warning',
           });
@@ -171,7 +171,7 @@ const Profile = () => {
       })
       .catch(error => {
         showMessage({
-          message: 'il sagit que vous avez des propostion',
+          message: 'netWork Failed!',
           color: 'warning',
           icon: 'warning',
         });
