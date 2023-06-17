@@ -205,7 +205,7 @@ export const Register = () => {
             <TextInput
               value={values.email}
               left={<TextInput.Icon icon="email" />}
-              placeholder="Enter your email"
+              placeholder="Entre votre email"
               autoCapitalize="none"
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
@@ -313,7 +313,7 @@ export const Register = () => {
             <View style={styles.forgotContainer}>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.forgotText}>
-                  have and account ?
+                avoir un compte deja ?
                   <Text style={{fontWeight: 'bold', color: Color.primary}}>
                     Login
                   </Text>

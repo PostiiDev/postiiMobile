@@ -390,7 +390,7 @@ const CreateOffre = () => {
           </View>
 
           <Button onPress={handleSubmit} mode="contained-tonal">
-            Creer votre offre
+            Creer votre appel d'offre
           </Button>
         </ScrollView>
       )}

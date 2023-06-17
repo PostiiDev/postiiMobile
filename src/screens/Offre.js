@@ -94,7 +94,7 @@ export const Offre = () => {
           <Text style={styles.title}>Mes Offre</Text>
 
           <Button onPress={() => navigation.navigate('OffreCreate')}>
-            Creer un offre
+            Creer un appel d'offre
           </Button>
           {offre.length > 0 ? (
             <View>
@@ -182,7 +182,7 @@ export const Offre = () => {
                   textAlign: 'center',
                   letterSpacing: 1.2,
                 }}>
-                Creer Votre Premier Offre
+                Creer Votre Premier appel d'Offre
               </Text>
             </View>
           )}
