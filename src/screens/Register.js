@@ -69,7 +69,6 @@ export const Register = () => {
   const [loading, setLoading] = useState(false);
   const url = useRecoilValue(apiUrl);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-
   const {handleChange, handleBlur, handleSubmit, values, errors, touched} =
     useFormik({
       validationSchema: RegiterSchema,

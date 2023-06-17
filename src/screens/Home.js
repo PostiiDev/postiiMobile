@@ -33,23 +33,21 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const isFocused = useIsFocused();
   const [search, setSearch] = useState('');
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-  const onChangeSearch = query => {
-  };
-  const searchFilterFunction = (text) => {
+  const onChangeSearch = query => {};
+  const searchFilterFunction = text => {
     // Check if searched text is not blank
     if (text) {
       // Inserted text is not blank
       // Filter the masterDataSource
       // Update FilteredDataSource
-      const newData = masterDataSource.filter(
-        function (item) {
-          const itemData = item.title
-            ? item.title.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
+      const newData = masterDataSource.filter(function (item) {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
       setSearch(text);
@@ -114,23 +112,11 @@ const Home = () => {
           <Text style={{paddingTop: '4%'}}>Loading ...</Text>
         </View>
       ) : (
-        <View style={{marginTop: '1%', flex:1}}>
-        <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
-          Trouver ici les meilleurs service en ligne
+        <View style={{marginTop: '1%', flex: 1}}>
+          <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
+            Trouver ici les meilleurs service en ligne
           </Text>
-          <View style={{marginHorizontal: '5%'}}>
-            <Searchbar
-              placeholder="rechercher un offre"
-              onChangeText={searchFilterFunction}
-              value={search}
-            />
-          </View>
-       
-          <Image
-            source={require('../assets/logo/logo.png')}
-            style={{height: height / 10, width: width}}
-          />
-         
+
           <FlatList
             contentContainerStyle={{}}
             data={offre}
