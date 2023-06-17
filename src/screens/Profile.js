@@ -15,7 +15,7 @@ import {
 import React, {useState, useRef, useEffect} from 'react';
 
 import {TextInput, Switch} from 'react-native-paper';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {showMessage} from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,20 +29,14 @@ import ErrorMessage from '../components/ErrorMessage';
 import {apiUrl} from '../atom/authtication';
 
 const RegiterSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('L email est requis*')
-    .required('L email est requis*')
-    .trim(),
+  email: Yup.string().email('L email est requis*').trim(),
   name: Yup.string()
-    .required('Le nom est requis*')
     .min(3, 'le nom  doit comporter au moins 3 caractères ')
     .max(15, 'le nom doit comporter moins de 15 caractères')
     .matches(/^(?!\s*$).+/, 'Le nom est requis*'),
   phoneNumber: Yup.string()
-    .required('numero du telephone obligatoir*')
     .max(8, 'numéro doit etre  8 chiffres*')
-    .min(8, 'numéro doit etre  8 chiffres*')
-    .required('Numéro de téléphone obligatoire*'),
+    .min(8, 'numéro doit etre  8 chiffres*'),
   isEnterprise: Yup.boolean(),
 
   IBN: Yup.string()
@@ -58,6 +52,8 @@ const RegiterSchema = Yup.object().shape({
 });
 const Profile = () => {
   const route = useRoute();
+  const navigation = useNavigation();
+  const isFocued = useIsFocused();
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [loading, setLoading] = useState(false);
   const url = useRecoilValue(apiUrl);
@@ -73,9 +69,12 @@ const Profile = () => {
   const [CNSS, setCNSS] = useState('');
   const [matricule, setMatricule] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [updated, setUpdated] = useState(false)
   useEffect(() => {
-    getUSerInfo();
-  }, []);
+    if (isFocued) {
+      getUSerInfo();
+    }
+  }, [isFocued, updated]);
   const logout = async () => {
     await AsyncStorage.clear();
 
@@ -83,7 +82,6 @@ const Profile = () => {
   };
   const getUSerInfo = async () => {
     const information = await fetchUSerInformation();
-    console.log('info:', information);
     setUserInfo(information);
     setUserInfo(information);
     setName(() => information.name);
@@ -116,6 +114,7 @@ const Profile = () => {
         message: 'Network request failed!',
         type: 'danger',
         backgroundColor: 'red',
+        icon: 'danger',
       });
       setLoading(false);
     } finally {
@@ -148,17 +147,16 @@ const Profile = () => {
     })
       .then(response => response.json())
       .then(async data => {
-        
         if (data.status == 1) {
           console.log('User deleted successfully.');
-          await logout()
+          await logout();
 
           showMessage({
             message: 'Votre compte a été supprimer',
             type: 'success',
             icon: 'success',
           });
-          await logout()
+          await logout();
 
           // Perform any additional actions after deleting the user
         } else {
@@ -180,24 +178,49 @@ const Profile = () => {
       });
   };
 
-  const {handleChange, handleBlur, handleSubmit, values, errors, touched} =
-    useFormik({
-      validationSchema: RegiterSchema,
-      initialValues: {
-        name: '',
-        email: '',
-        isEnterprise: isSwitchOn,
-        IBN: '',
-        CNSS: '',
-        matricule: '',
-        phoneNumber: '',
-      },
 
-      onSubmit: async values => {
-        console.log('values:', values);
-        //setLoading(true);
-      },
-    });
+    const updateProfile = async () => {
+      let updatedData = {
+        name: name,
+        email: email,
+        isEnterprise: isSwitchOn,
+        IBN: IBN,
+        CNSS: CNSS,
+        matricule: matricule,
+        phoneNumber: phoneNumber,
+      };
+      console.log('updatedData:', updatedData);
+
+      let value = await AsyncStorage.getItem('user');
+      let parsedValue = JSON.parse(value);
+      let id = parsedValue.userInfo._id;
+      setLoading(true);
+      fetch(`${url}/api/user/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Profile updated successfully:', data);
+          // Perform any additional actions after updating the profile
+          showMessage({
+            message: 'Votre compte est a jour ',
+            type: 'success',
+            icon: 'success',
+          });
+          setUpdated(()=> !updated)
+        })
+        .catch(error => {
+          showMessage({
+            message: 'Network failed !',
+            color: 'warning',
+            icon: 'warning',
+          }); // Handle any error that occurred during the update process
+        });
+    }
   return (
     <KeyboardAvoidingView style={styles.container}>
       {loading ? (
@@ -233,97 +256,69 @@ const Profile = () => {
                 <Text style={styles.switchText}>Tant que enterprise</Text>
               </View>
               <TextInput
-                value={userInfo.name}
+                value={name}
                 left={<TextInput.Icon icon="account" />}
                 placeholder="Enter votre nom"
                 autoCapitalize="none"
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                error={errors.name}
-                touched={touched.name}
+                onChangeText={text => setName(name)}
                 style={styles.input}
               />
-              <ErrorMessage errorValue={touched.name && errors.name} />
               <TextInput
-                value={userInfo.email}
+                value={email}
                 left={<TextInput.Icon icon="email" />}
                 placeholder="Enter your email"
                 autoCapitalize="none"
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                error={errors.email}
-                touched={touched.email}
+                onChangeText={text => setEmail(text)}
                 style={styles.input}
               />
-              <ErrorMessage errorValue={touched.email && errors.email} />
 
               <TextInput
-                value={userInfo.phoneNumber}
+                value={phoneNumber}
                 left={<TextInput.Icon icon="phone" />}
                 placeholder="Enter votre numérto du telephone"
                 autoCapitalize="none"
-                onChangeText={handleChange('phoneNumber')}
-                onBlur={handleBlur('phoneNumber')}
-                error={errors.phoneNumber}
-                touched={touched.phoneNumber}
+                onChangeText={text => setPhoneNumber(text)}
                 style={styles.input}
                 maxLength={8}
                 keyboardType="numeric"
-              />
-              <ErrorMessage
-                errorValue={touched.phoneNumber && errors.phoneNumber}
               />
 
               {isSwitchOn && (
                 <>
                   <TextInput
-                    value={userInfo.IBN}
+                    value={IBN}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre IBN"
                     autoCapitalize="none"
-                    onChangeText={handleChange('IBN')}
-                    onBlur={handleBlur('IBN')}
-                    error={errors.IBN}
-                    touched={touched.IBN}
+                    onChangeText={text => setIBAN(text)}
                     style={styles.input}
                     maxLength={20}
                     keyboardType="numeric"
                   />
-                  <ErrorMessage errorValue={touched.CNSS && errors.CNSS} />
                   <TextInput
-                    value={userInfo.CNSS}
+                    value={CNSS}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre CNSS"
                     autoCapitalize="none"
-                    onChangeText={handleChange('CNSS')}
-                    onBlur={handleBlur('CNSS')}
-                    error={errors.CNSS}
-                    touched={touched.CNSS}
+                    onChangeText={text => setCNSS(text)}
                     style={styles.input}
                     maxLength={20}
                     keyboardType="numeric"
                   />
-                  <ErrorMessage errorValue={touched.CNSS && errors.CNSS} />
                   <TextInput
-                    value={userInfo.matricule}
+                    value={matricule}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre matricule"
                     autoCapitalize="none"
-                    onChangeText={handleChange('matricule')}
-                    onBlur={handleBlur('matricule')}
-                    error={errors.matricule}
-                    touched={touched.matricule}
+                    onChangeText={text => setMatricule(text)}
                     style={styles.input}
                     maxLength={20}
                     keyboardType="numeric"
-                  />
-                  <ErrorMessage
-                    errorValue={touched.matricule && errors.matricule}
                   />
                 </>
               )}
               <TouchableOpacity
-                onPress={handleSubmit}
+                onPress={updateProfile}
                 style={[styles.customButton, loading && {opacity: 0.5}]}
                 disabled={loading}>
                 {loading ? (
