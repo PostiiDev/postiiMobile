@@ -260,7 +260,7 @@ const Profile = () => {
                 left={<TextInput.Icon icon="account" />}
                 placeholder="Enter votre nom"
                 autoCapitalize="none"
-                onChangeText={text => setName(name)}
+                onChangeText={text => setName(text)}
                 style={styles.input}
               />
               <TextInput
@@ -324,7 +324,7 @@ const Profile = () => {
                 {loading ? (
                   <ActivityIndicator color={Color.white} size="small" />
                 ) : (
-                  <Text style={styles.customButtonText}>Update</Text>
+                  <Text style={styles.customButtonText}>Mettre a jour</Text>
                 )}
               </TouchableOpacity>
               <TouchableOpacity
@@ -339,7 +339,7 @@ const Profile = () => {
                   <ActivityIndicator color={Color.white} size="small" />
                 ) : (
                   <Text style={[styles.customButtonText]}>
-                    Delete you Profile
+                    Supprimer votre profile
                   </Text>
                 )}
               </TouchableOpacity>
