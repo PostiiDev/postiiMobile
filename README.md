@@ -38,6 +38,24 @@ enjoy working !!
 
 
 
+1- 
+
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+2 - 
+cd android 
+
+3 - 
+./gradlew assembleDebug
+
+
+path in folder 
+\postiiMobile\android\app\build\outputs\apk\debug
+4- upload to https://wetransfer.com/
+
+
+
+
 
 
 
