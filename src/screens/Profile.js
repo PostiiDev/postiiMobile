@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   ScrollView,
   Dimensions,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useState, useRef, useEffect} from 'react';
 
@@ -64,20 +64,35 @@ const Profile = () => {
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const [user, setUser] = useState({});
   const [userInfo, setUserInfo] = useState({});
+  const [isAuthenticated, setIsAuthenticated] =
+    useRecoilState(isAuthenticatedUser);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
+  const [IBN, setIBAN] = useState('');
+  const [CNSS, setCNSS] = useState('');
+  const [matricule, setMatricule] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   useEffect(() => {
     getUSerInfo();
   }, []);
+  const logout = async () => {
+    await AsyncStorage.clear();
 
+    setIsAuthenticated(() => false);
+  };
   const getUSerInfo = async () => {
     const information = await fetchUSerInformation();
-    console.log('info:', information.name)
+    console.log('info:', information);
     setUserInfo(information);
     setUserInfo(information);
-    setIsSwitchOn(() => information.isEnterprise);
-    console.log('is switched on !', isSwitchOn)
-
-
+    setName(() => information.name);
+    setEmail(() => information.email);
+    // setIsSwitchOn(() => information.isEnterprise);
+    setIBAN(() => information.IBN);
+    setCNSS(information.CNSS);
+    setMatricule(() => information.matricule);
+    setPhoneNumber(information.phoneNumber);
   };
   const fetchUSerInformation = async () => {
     try {
@@ -110,28 +125,72 @@ const Profile = () => {
     }
   };
 
-  const deleteProfile = async = () => {
+  const deleteProfile = (async = () => {
     Alert.alert('Alert ', 'Voulez-vous supprimer votre compte définitivement', [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      {text: 'OK', onPress: () => deleteUser()},
     ]);
-  }
+  });
+  const deleteUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+    let parsedValue = JSON.parse(value);
+    let id = parsedValue.userInfo._id;
+    console.log('id:', id);
+    fetch(`${url}/api/user/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(async data => {
+        
+        if (data.status == 1) {
+          console.log('User deleted successfully.');
+          await logout()
+
+          showMessage({
+            message: 'Votre compte a été supprimer',
+            type: 'success',
+            icon: 'success',
+          });
+          await logout()
+
+          // Perform any additional actions after deleting the user
+        } else {
+          console.log('User deletion failed.');
+          // Handle the failure scenario
+          showMessage({
+            message: 'il sagit que vous avez des propostion',
+            color: 'warning',
+            icon: 'warning',
+          });
+        }
+      })
+      .catch(error => {
+        showMessage({
+          message: 'il sagit que vous avez des propostion',
+          color: 'warning',
+          icon: 'warning',
+        });
+      });
+  };
 
   const {handleChange, handleBlur, handleSubmit, values, errors, touched} =
     useFormik({
       validationSchema: RegiterSchema,
       initialValues: {
-        name: userInfo.name ? userInfo.name : '',
-        email: userInfo.email ? userInfo.email : '',
+        name: '',
+        email: '',
         isEnterprise: isSwitchOn,
-        IBN: userInfo.IBN ? userInfo.IBN : '',
-        CNSS: userInfo.CNSS ? userInfo.CNSS : '',
-        matricule: userInfo.matricule ? userInfo.matricule : '',
-        phoneNumber: userInfo.phoneNumber ? userInfo.phoneNumber : '',
+        IBN: '',
+        CNSS: '',
+        matricule: '',
+        phoneNumber: '',
       },
 
       onSubmit: async values => {
@@ -162,7 +221,7 @@ const Profile = () => {
               </View>
 
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>S'inscrire</Text>
+                <Text style={styles.title}>Modifier Votre profil</Text>
               </View>
 
               <View style={styles.switchContainer}>
@@ -174,7 +233,7 @@ const Profile = () => {
                 <Text style={styles.switchText}>Tant que enterprise</Text>
               </View>
               <TextInput
-              value={values.name}
+                value={userInfo.name}
                 left={<TextInput.Icon icon="account" />}
                 placeholder="Enter votre nom"
                 autoCapitalize="none"
@@ -186,7 +245,7 @@ const Profile = () => {
               />
               <ErrorMessage errorValue={touched.name && errors.name} />
               <TextInput
-                value={values.email}
+                value={userInfo.email}
                 left={<TextInput.Icon icon="email" />}
                 placeholder="Enter your email"
                 autoCapitalize="none"
@@ -199,7 +258,7 @@ const Profile = () => {
               <ErrorMessage errorValue={touched.email && errors.email} />
 
               <TextInput
-                value={values.phoneNumber}
+                value={userInfo.phoneNumber}
                 left={<TextInput.Icon icon="phone" />}
                 placeholder="Enter votre numérto du telephone"
                 autoCapitalize="none"
@@ -218,7 +277,7 @@ const Profile = () => {
               {isSwitchOn && (
                 <>
                   <TextInput
-                    value={values.IBN}
+                    value={userInfo.IBN}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre IBN"
                     autoCapitalize="none"
@@ -232,7 +291,7 @@ const Profile = () => {
                   />
                   <ErrorMessage errorValue={touched.CNSS && errors.CNSS} />
                   <TextInput
-                    value={values.CNSS}
+                    value={userInfo.CNSS}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre CNSS"
                     autoCapitalize="none"
@@ -246,7 +305,7 @@ const Profile = () => {
                   />
                   <ErrorMessage errorValue={touched.CNSS && errors.CNSS} />
                   <TextInput
-                    value={values.matricule}
+                    value={userInfo.matricule}
                     left={<TextInput.Icon icon="subtitles-outline" />}
                     placeholder="Enter votre matricule"
                     autoCapitalize="none"
@@ -275,12 +334,18 @@ const Profile = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={deleteProfile}
-                style={[styles.customButton, loading && {opacity: 0.5,}, {backgroundColor:'red'}]}
+                style={[
+                  styles.customButton,
+                  loading && {opacity: 0.5},
+                  {backgroundColor: 'red'},
+                ]}
                 disabled={loading}>
                 {loading ? (
                   <ActivityIndicator color={Color.white} size="small" />
                 ) : (
-                  <Text style={[styles.customButtonText]}>Delete you Profile</Text>
+                  <Text style={[styles.customButtonText]}>
+                    Delete you Profile
+                  </Text>
                 )}
               </TouchableOpacity>
             </View>
