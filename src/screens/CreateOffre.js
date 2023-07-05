@@ -47,10 +47,11 @@ const CreateOffre = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [refresh, setRefrech] = useState(false);
-  const [dateError, setDateError] = useState('');
 
   const [choseInterrest, setChoseInterrest] =
     useRecoilState(selectedCategories);
+    const [dateError, setDateError] = useState('');
+
   const [date, setDate] = useState(new Date());
   const [isPickerShow, setIsPickerShow] = useState(false);
   const takeimage = async () => {
