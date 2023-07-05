@@ -109,7 +109,7 @@ export const Login = () => {
           <TextInput
             value={values.email}
             left={<TextInput.Icon icon="email" />}
-            placeholder="Enter your email"
+            placeholder="Entre votre email"
             autoCapitalize="none"
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
@@ -128,7 +128,7 @@ export const Login = () => {
               />
             }
             left={<TextInput.Icon icon="form-textbox-password" />}
-            placeholder="Enter your password"
+            placeholder="Entre votre mot de passe"
             secureTextEntry={passwordVisible}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
@@ -156,15 +156,15 @@ export const Login = () => {
               onValueChange={onToggleSwitch}
               color={Color.primary}
             />
-            <Text style={styles.switchText}>Remember Me</Text>
+            <Text style={styles.switchText}>me rappeler</Text>
           </View>
 
           <View style={styles.forgotContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text style={styles.forgotText}>
-                don't have and account ?
+              avoir un compte ?
                 <Text style={{fontWeight: 'bold', color: Color.primary}}>
-                  Register
+                  S'inscrire
                 </Text>
               </Text>
             </TouchableOpacity>
