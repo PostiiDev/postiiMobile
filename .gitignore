@@ -1,12 +1,11 @@
 # OSX
 #
 .DS_Store
-
 # Xcode
 #
 build/
 *.pbxuser
-!default.pbxuser
+!default.pbxusers
 *.mode1v3
 !default.mode1v3
 *.mode2v3
@@ -39,6 +38,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # fastlane
 #
